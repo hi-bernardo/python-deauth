@@ -3,12 +3,12 @@
 Usando o ``` airmon-ng ``` você irá colocar sua placa wifi em modo monitor com o seguinte comando:
 
 ```
-airmon-ng start wlan0 
+sudo airmon-ng start wlan0 
 ```
 
 clone o repositório e rode o script
 ```
-git clone https://github.com/Brazoo/PYTHON-DEAUTH.git
+git clone https://github.com/Brazoo/python-deauth.git
 python3 deauth.py
 ```
  
