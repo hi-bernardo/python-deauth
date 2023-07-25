@@ -36,14 +36,16 @@ if __name__ == "__main__":
         for idx, (essid, bssid) in enumerate(wifi_networks, start=1):
             print(f"{idx}. ESSID: {essid}, BSSID: {bssid}")
 
-        selected_option = int(input("ID da rede para o ataque: "))
-        if 1 <= selected_option <= len(wifi_networks):
-            selected_bssid = wifi_networks[selected_option - 1][1]
-            print(f"Realizando o deauth na rede com BSSID: {selected_bssid}")
-            deauth_all_devices(selected_bssid)
-            print("Deauth enviado para todos os dispositivos na rede.")
-        else:
-            print("Opção inválida.")
+        try:
+            selected_option = int(input("ID da rede para o ataque: "))
+            if 1 <= selected_option <= len(wifi_networks):
+                selected_bssid = wifi_networks[selected_option - 1][1]
+                print(f"Realizando o deauth na rede com BSSID: {selected_bssid}")
+                deauth_all_devices(selected_bssid)
+                print("Deauth enviado para todos os dispositivos na rede.")
+            else:
+                print("Opção inválida.")
+        except ValueError:
+            print("Entrada inválida. Por favor, insira um número.")
     else:
         print("O scan não identificou redes.")
-        
